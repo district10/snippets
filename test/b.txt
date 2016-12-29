@@ -1,0 +1,5 @@
+b.txt
+
+    @include <-=a.txt=
+
+b.end

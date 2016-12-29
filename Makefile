@@ -6,3 +6,6 @@ pandoc:
 	make -C pandoc -f build.mk
 html:	
 	make -C html -f build.mk
+gh:
+	git add -A; git commit -m "`date`"; git push
+

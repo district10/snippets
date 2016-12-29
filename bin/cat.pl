@@ -22,8 +22,10 @@ sub unfold {
     my($FILENAME) = shift @_;
     my($FULLNAME) = abs_path($FILENAME);
     if (&inList($FULLNAME, @_) == 1) {
-        print STDERR "ERROR! Loop detected: "."[$FULLNAME]-->"."{@_}"."\n";
-        print      "\nERROR! Loop detected: "."[$FULLNAME]-->"."{@_}"."\n\n";
+        open my $INPUT, '<', $FILENAME;
+        while(<$INPUT>) {
+            print $PADDING.$_;
+        }
         return;
     }
     unshift(@_, $FULLNAME);
