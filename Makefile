@@ -2,9 +2,9 @@
 
 outputs := tutorial_cat.pl_.md
 
-all: pandoc html test $(outputs)
+all: test pandoc html $(outputs)
 clean:
-	rm README.md
+	rm $(outputs)
 	make -C html -f build.mk clean
 	make -C test -f build.mk clean
 	make -C pandoc -f build.mk clean

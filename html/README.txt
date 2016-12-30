@@ -4,6 +4,6 @@ title: Code Snippets of TZX
 
 # Snippets
 
-## Pandoc
+## Pandoc Usages
 
-@include <-=../pandoc/README.txt=
+%include <-=../pandoc/README.md=

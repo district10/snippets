@@ -28,9 +28,11 @@
 
     %include <-=test/g.txt=
 
-通过 Makefile（[`test/build.mk`(test/build.mk)]）：
+通过 Makefile（[`test/build.mk`](test/build.mk)]）：
 
-    %include <-=test/build.mk=
+```makefile
+%include <-=test/build.mk=
+```
 
 生成的 [`test/README.md`](test/README.md) 为：
 
