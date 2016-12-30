@@ -3,6 +3,8 @@ outputs := \
 	dst/1.test-ascii-off.html \
 
 all: $(outputs) README.md
+clean:
+	rm -f $(outputs) README.md
 
 dst/1.test-ascii-off.html: res/simplest.md
 	pandoc $< -o $@

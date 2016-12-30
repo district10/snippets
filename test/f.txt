@@ -1,0 +1,11 @@
+f.txt
+
+    f <- a (expand)
+
+    @include <-=a.txt=
+
+    f <- a (not expand)
+
+    %include <-=a.txt=
+
+f.end

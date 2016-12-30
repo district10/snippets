@@ -1,5 +1,7 @@
 c.txt
 
-@include <-=d/da.txt=
+    c <- da
+
+    @include <-=d/da.txt=
 
 c.end

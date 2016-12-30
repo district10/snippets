@@ -1,5 +1,7 @@
 b.txt
 
+    b <- a
+
     @include <-=a.txt=
 
 b.end

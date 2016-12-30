@@ -17,25 +17,32 @@ sub inList {
     return 0;
 }
 
-sub unfold {
-    my($PADDING)  = shift @_;
-    my($FILENAME) = shift @_;
-    my($FULLNAME) = abs_path($FILENAME);
-    if (&inList($FULLNAME, @_) == 1) {
-        open my $INPUT, '<', $FILENAME;
-        while(<$INPUT>) {
-            print $PADDING.$_;
-        }
-        return;
+sub printLines {
+    my $padding     = shift;
+    my $filename    = shift;
+    open my $input, '<', $filename;
+    while(<$input>) {
+        print $padding.$_;
     }
-    unshift(@_, $FULLNAME);
+}
 
-    open my $INPUT, '<', $FILENAME;
-    while(<$INPUT>) {
-        if (/^(\s*)\@include <-=(.*)=/) {
-            &unfold($PADDING.$1, dirname($FILENAME)."/".$2, @_);
-        } else {
-            print $PADDING.$_;
+sub unfold {
+    my $padding     = shift;
+    my $filename    = shift;
+    my $fullname    = abs_path($filename);
+    if (&inList($fullname, @_) == 1) {
+        &printLines($padding, $filename);
+    } else {
+        unshift(@_, $fullname);
+        open my $input, '<', $filename;
+        while(<$input>) {
+            if (/^(\s*)\@include <-=(.*)=/) {
+                &unfold($padding.$1, dirname($filename)."/".$2, @_);
+            } elsif (/^(\s*)\%include <-=(.*)=/) {
+                &printLines($padding.$1, $2);
+            } else {
+                print $padding.$_;
+            }
         }
     }
 }
