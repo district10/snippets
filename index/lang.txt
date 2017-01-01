@@ -13,7 +13,3 @@
 -   string manip -<
 
     :   ...
-
--   etc
-nice
-nice

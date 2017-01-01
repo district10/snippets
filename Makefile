@@ -1,19 +1,19 @@
-.PHONY: pandoc src index
+.PHONY: pandoc gists index
 
 bin := bin/cat.pl bin/md2html.jar
 
-all: $(bin) README.md pandoc src index publish
+all: $(bin) README.md pandoc gists index publish
 clean:
 	rm -rf publish README.md
 	make -C index -f build.mk clean
-	make -C src -f build.mk clean
+	make -C gists -f build.mk clean
 	make -C pandoc -f build.mk clean
 pandoc:
 	make -C pandoc -f build.mk
 index:
 	make -C index -f build.mk
-src:	
-	make -C src -f build.mk
+gists:	
+	make -C gists -f build.mk
 publish: Makefile $(wildcard index/* index/*/*) bin/md2html.jar
 	java -jar bin/md2html.jar -i index -o publish
 %.md: %.txt

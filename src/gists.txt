@@ -1,3 +1,0 @@
-All my gists.
-
-%include <-=gists/0001.md=

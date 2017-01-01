@@ -1,4 +1,11 @@
 outputs := README.md index.md
+deps := \
+	lang.md \
+	lang.txt \
+	../gists/README.txt \
+	../gists/README.md \
+	../pandoc/README.txt \
+	../pandoc/README.md \
 
 all: $(outputs)
 clean:
@@ -7,6 +14,8 @@ clean:
 index.md: README.md
 %.md: %.txt
 	perl ../bin/cat.pl $< | perl ../bin/fold.pl > $@
-README.md: ../src/gists.txt ../src/lang.txt
-../src/*.txt:
-	make -C ../src -f build.mk
+README.md: $(deps)
+../gists/*:
+	make -C ../gists -f build.mk
+../pandoc/*:
+	make -C ../pandoc -f build.mk

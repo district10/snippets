@@ -10,16 +10,16 @@ title: Code Snippets of TZX
 
         %include <-=../pandoc/README.md=
 
-2.  Snippets
+2.  Snippets +<
 
-    :   lang +<
+    :   lang -<
 
         :   All languages in one.
 
-            %include <-=../src/lang.md=
+            %include <-=lang.md=
 
         gists +<
 
         :   All my gists.
 
-            %include <-=../src/gists.md=
+            %include <-=../gists/README.md=

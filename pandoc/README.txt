@@ -10,7 +10,7 @@
         -   源码 +<
 
             :   ```md
-                %include <-=res/simplest.md=
+                %include <-=res/simplest.txt=
                 ```
 
         -   without `--ascii` +<
@@ -25,8 +25,8 @@
                 %include <-=dst/1.test-ascii-on.html=
                 ```
 
-        Notes：如果你的文档里有非 utf-8 字符，导致 pandoc 无法转换，可以用 `iconv` 预先做转化，这是我之前评论过的一个
-        [Issue](https://github.com/jgm/pandoc/issues/1417)：
+        Notes：如果你的文档里有非 utf-8 字符，导致 pandoc 无法转换，可以用
+        `iconv` 预先做转化，这是我之前评论过的一个 [Issue](https://github.com/jgm/pandoc/issues/1417)：
 
         I have bad bytes often too. It takes time to find where they are, but
         if you don't care about these bytes, just use `iconv` to strip all
@@ -42,7 +42,7 @@
 
         See [linux - How to remove non UTF-8 characters from text file - Stack Overflow](http://stackoverflow.com/questions/12999651/how-to-remove-non-utf-8-characters-from-text-file).
 
-        You can then diff to see where the bad bytes are:
+        You can then `diff` to see where the bad bytes are:
 
         ```bash
         $ git diff --no-index --color-words <(iconv -f utf-8 -t utf-8 -c input.md) input.md
@@ -58,14 +58,14 @@
                 %include <-=res/east_asian_line_breaks.md=
                 ```
 
-            -   无此 plugin -<
+        -   无此 plugin -<
 
-                :   ```html
-                    %include <-=dst/2.test-east_asian_line_breaks-off.html=
-                    ```
+            :   ```html
+                %include <-=dst/2.test-east_asian_line_breaks-off.html=
+                ```
 
-            -   有此 plugin -<
+        -   有此 plugin -<
 
-                :   ```html
-                    %include <-=dst/2.test-east_asian_line_breaks-on.html=
-                    ```
+            :   ```html
+                %include <-=dst/2.test-east_asian_line_breaks-on.html=
+                ```
