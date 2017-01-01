@@ -55,7 +55,7 @@
         -   源码 -<
 
             :   ```md
-                %include <-=res/east_asian_line_breaks.md=
+                %include <-=res/east_asian_line_breaks.txt=
                 ```
 
         -   无此 plugin -<
