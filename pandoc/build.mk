@@ -6,7 +6,7 @@ outputs := \
 
 all: $(outputs) README.md
 clean:
-	rm -f $(outputs) README.md
+	rm -rf dst README.md
 
 dst/1.test-ascii-off.html: res/simplest.txt
 	@mkdir -p $(@D)

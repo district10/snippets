@@ -1,0 +1,19 @@
+-   reserved words -<
+
+    :   ...
+
+-   varibale -<
+
+    :   ...
+
+-   for loop -<
+
+    :   ...
+
+-   string manip -<
+
+    :   ...
+
+-   etc
+nice
+nice

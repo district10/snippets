@@ -1,18 +1,21 @@
-.PHONY: pandoc html
+.PHONY: pandoc src index
 
 bin := bin/cat.pl bin/md2html.jar
 
-all: $(bin) README.md pandoc html publish
+all: $(bin) README.md pandoc src index publish
 clean:
-	rm -f publish README.md
-	make -C html -f build.mk clean
+	rm -rf publish README.md
+	make -C index -f build.mk clean
+	make -C src -f build.mk clean
 	make -C pandoc -f build.mk clean
 pandoc:
 	make -C pandoc -f build.mk
-html:	
-	make -C html -f build.mk
-publish: Makefile $(wildcard html/* html/*/*) bin/md2html.jar
-	java -jar bin/md2html.jar -i html -o publish -f
+index:
+	make -C index -f build.mk
+src:	
+	make -C src -f build.mk
+publish: Makefile $(wildcard index/* index/*/*) bin/md2html.jar
+	java -jar bin/md2html.jar -i index -o publish
 %.md: %.txt
 	perl bin/cat.pl $< > $@
 bin/cat.pl: ../cat/bin/cat.pl

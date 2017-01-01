@@ -7,3 +7,6 @@ clean:
 index.md: README.md
 %.md: %.txt
 	perl ../bin/cat.pl $< | perl ../bin/fold.pl > $@
+README.md: ../src/gists.txt ../src/lang.txt
+../src/*.txt:
+	make -C ../src -f build.mk
