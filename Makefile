@@ -18,12 +18,12 @@ publish: Makefile $(wildcard index/* index/*/*) bin/md2html.jar
 	java -jar bin/md2html.jar -i index -o publish
 %.md: %.txt
 	perl bin/cat.pl $< > $@
-bin/cat.pl: ../cat/bin/cat.pl
+bin/cat.pl: 
 	@mkdir -p $(@D)
-	cp $< $@ || wget https://raw.githubusercontent.com/district10/cat/master/bin/cat.pl -O $@
-bin/md2html.jar: ../md2html/target/md2html.jar
+	cp ../cat/bin/cat.pl $@ || wget https://raw.githubusercontent.com/district10/cat/master/bin/cat.pl -O $@
+bin/md2html.jar: 
 	@mkdir -p $(@D)
-	cp $< $@ || wget http://whudoc.qiniudn.com/java/md2html/md2html.jar -O $@
+	cp ../md2html/target/md2html.jar $@ || wget http://whudoc.qiniudn.com/java/md2html/md2html.jar -O $@
 	rm -rf publish
 gh:
 	git add -A; git commit -m "`date`"; git push
