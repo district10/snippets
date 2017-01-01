@@ -1,9 +1,0 @@
-i.txt
-
-    reveal with @@include/%%include (verbatim)
-
-    %%include <-=a.txt=
-
-    @@include <-=a.txt=
-
-i.end

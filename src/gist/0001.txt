@@ -1,0 +1,5 @@
+-   int2string, int to std::string
+
+    :   `toString;`{.tag}
+
+        %include <-=to_string.cpp=

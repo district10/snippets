@@ -2,13 +2,17 @@
 
 # Usage:
 #       $ perl cat.pl INPUT_FILE > OUTPUT_FILE
+#
+# Detailed Example:
+#       https://github.com/district10/cat/blob/master/tutorial_cat.pl_.md
 
 use 5.010;
 use strict;
+use warnings;
 use File::Basename;
 use Cwd 'abs_path';
 
-sub inList {
+sub inList {                                # is needle in haystack?
     my $needle = shift;
     my @haystack = @_;
     foreach my $hay (@haystack) {
@@ -17,60 +21,64 @@ sub inList {
     return 0;
 }
 
-sub printLines {
-    my $padding     = shift;
-    my $filename    = shift;
-    if (open my $input, '<', $filename) {
-        while(<$input>) {
+sub preserveLines {
+    my $pd = shift;                         # pd: padding
+    my $fn = shift;                         # fn: filename
+    if (open my $fh, '<', $fn) {            # fh: file handle
+        while(<$fh>) {
             s/\r?\n?$//;
-            print $padding.$_."\n";
+            print $pd.$_."\n";
         }
     } else {
-        print STDERR $padding."Error openning file: [".$filename."].\n";
-        print        $padding."Error openning file: [".$filename."].\n";
+        print STDERR "Error openning file: [".$fn."].\n";
+        print    $pd."Error openning file: [".$fn."].\n";
     }
 }
 
-sub unfold {
-    my $padding     = shift;
-    my $filename    = shift;
-    if (! -e $filename) {
-        print STDERR $padding."Error openning file: [".$filename."].\n";
-        print        $padding."Error openning file: [".$filename."].\n";
+sub unfoldLines {
+    my $pd = shift;
+    my $fn = shift;
+    if (! -f $fn) {                         # -f: Entry is a plain file
+        print STDERR "Error openning file: [".$fn."].\n";
+        print    $pd."Error openning file: [".$fn."].\n";
         return;
     }
-    my $fullname    = abs_path($filename);
-    if (&inList($fullname, @_) == 1) {
-        &printLines($padding, $filename);
+    my $ap = abs_path($fn);                 # ap: abs path
+    if (&inList($ap, @_) == 1) {
+        &preserveLines($pd, $fn);
     } else {
-        unshift(@_, $fullname);
-        open my $input, '<', $filename or return;
-        my $idx = 0;
-        while(<$input>) {
+        unshift(@_, $ap);
+        open my $fh, '<', $fn or return;
+        my $dn = dirname($fn);              # dn: dirname
+        while(<$fh>) {
             s/\r?\n?$//;
-            if (/^(?<p>\s*)\@include <-=(?<f>.*)=$/) {
-                my $p = $+{p}; my $f = $+{f};
+            if (/^(\s*)\@include <-=([^=]*)=$/) {
+                my $p = $1; my $f = $2;
                 if ($f =~ /^.:/ or $f =~ /^\//) {
-                    &unfold($padding.$p, $f, @_);
+                    &unfoldLines($pd.$p, $f, @_);
                 } else {
-                    &unfold($padding.$p, dirname($filename)."/".$f, @_);
+                    &unfoldLines($pd.$p, $dn."/".$f, @_);
                 }
-            } elsif (/^(?<p>\s*)\%include <-=(?<f>.*)=$/) {
-                my $p = $+{p}; my $f = $+{f};
+            } elsif (/^(\s*)\%include <-=([^=]*)=$/) {
+                my $p = $1; my $f = $2;
                 if ($f =~ /^.:/ or $f =~ /^\//) {
-                    &printLines($padding.$p, $f);
+                    &preserveLines($pd.$p, $f);
                 } else {
-                    &printLines($padding.$p, dirname($filename)."/".$f);
+                    &preserveLines($pd.$p, $dn."/".$f);
                 }
-            } elsif (/^(?<p>\s*)\%\%include <-=(?<f>.*)=$/) {
-                print $padding.$+{p}.'%include <-='.$+{f}."=\n";
-            } elsif (/^(?<p>\s*)\@\@include <-=(?<f>.*)=$/) {
-                print $padding.$+{p}.'@include <-='.$+{f}."=\n";
+            } elsif (/^(?<p>\s*)\%\%include <-=(?<f>[^=]*)=$/) {
+                print $pd.$+{p}.'%include <-='.$+{f}."=\n";
+            } elsif (/^(?<p>\s*)\@\@include <-=(?<f>[^=]*)=$/) {
+                print $pd.$+{p}.'@include <-='.$+{f}."=\n";
             } else {
-                print $padding.$_."\n";
+                print $pd.$_."\n";
             }
         }
     }
 }
 
-&unfold("", $ARGV[0]);
+if (-f $ARGV[0]) {
+    &unfoldLines("", $ARGV[0]);
+} else {
+    print STDERR "Error openning file: [".$ARGV[0]."].\n";
+}

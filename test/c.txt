@@ -1,7 +1,0 @@
-c.txt
-
-    c <- da
-
-    @include <-=d/da.txt=
-
-c.end

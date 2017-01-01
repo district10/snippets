@@ -1,8 +1,9 @@
-outputs :=
+outputs := README.md index.md
 
-all: $(outputs) README.md
+all: $(outputs)
 clean:
-	rm -f $(outputs) README.md
+	rm -f $(outputs)
 
-README.md: README.txt
-	perl ../bin/cat.pl $< > $@
+index.md: README.md
+%.md: %.txt
+	perl ../bin/cat.pl $< | perl ../bin/fold.pl > $@

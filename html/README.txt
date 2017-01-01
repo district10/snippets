@@ -4,6 +4,8 @@ title: Code Snippets of TZX
 
 # Snippets
 
-## Pandoc Usages
+1.  Pandoc -<
 
-%include <-=../pandoc/README.md=
+    :   简要介绍一下 pandoc 的一些常用设置。
+
+        %include <-=../pandoc/README.md=
